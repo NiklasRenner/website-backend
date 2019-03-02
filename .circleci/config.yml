@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/website-backend
+
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+
+    steps:
+      - checkout
+      -
+      - restore_cache:
+          key: website-backend-{{ checksum "pom.xml" }}
+
+      - run: mvn dependency:go-offline
+        -
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: website-backend-{{ checksum "pom.xml" }}
+
+      - run: mvn package
+
+    deploy:
+      machine:
+        enabled: true
+
+      steps:
+        - run:
+            name: Deploy with SCP
+            command: |
+              scp target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
