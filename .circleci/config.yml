@@ -21,6 +21,9 @@ jobs:
 
       - run: mvn package
 
+      - store_artifacts:
+          path: target/website-backend.war
+
   deploy:
     machine:
       enabled: true
