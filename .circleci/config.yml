@@ -21,12 +21,12 @@ jobs:
 
       - run: mvn package
 
-    deploy:
-      machine:
-        enabled: true
+  deploy:
+    machine:
+      enabled: true
 
-      steps:
-        - run:
-            name: Deploy with SCP
-            command: |
-              scp target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
+    steps:
+      - run:
+          name: Deploy with SCP
+          command: |
+            scp target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
