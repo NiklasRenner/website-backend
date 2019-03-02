@@ -23,5 +23,5 @@ jobs:
 
       - add_ssh_keys:
           fingerprints:
-            - "18:4a:ef:50:fe:1d:95:d6:a3:4f:bb:09:85:4e:4f:36"
+            - "64:36:b1:01:c9:44:1a:45:68:33:e4:68:7c:39:9f:b6"
       - run: scp -o stricthostkeychecking=no target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
