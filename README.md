@@ -1,4 +1,4 @@
-# Kotlin Spring-Boot for [dev.renner.id](https://dev.renner.id)
+# Kotlin Spring-Boot application for [https://dev.renner.id](https://dev.renner.id)
 
 Personal project for personal website.
 
