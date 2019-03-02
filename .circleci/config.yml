@@ -1,10 +1,10 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/repo
-
     docker:
       - image: circleci/openjdk:8-jdk-browsers
+
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -27,12 +27,12 @@ jobs:
           key: backend-artifact-{{ checksum "pom.xml" }}
 
   deploy:
-    working_directory: ~/repo
-
     docker:
       - image: circleci/openjdk:8-jdk-browsers
 
-    steps: # need to checkout code again for the
+    working_directory: ~/repo
+
+    steps: # need to checkout code again for getting pom checksum
       - checkout
 
       - restore_cache:
