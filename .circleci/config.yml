@@ -22,7 +22,7 @@ jobs:
       - run: mvn package
 
       - save_cache:
-          paths:
+          paths: # cache artifact so it can be retrieved in deploy step, instead of building again.
             - ~/repo/target/
           key: backend-artifact-{{ checksum "pom.xml" }}
 
@@ -32,7 +32,7 @@ jobs:
     docker:
       - image: circleci/openjdk:8-jdk-browsers
 
-    steps:
+    steps: # need to checkout code again for the
       - checkout
 
       - restore_cache:
