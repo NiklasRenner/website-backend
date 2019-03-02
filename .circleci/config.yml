@@ -22,7 +22,7 @@ jobs:
       - run: mvn package
 
       - store_artifacts:
-          path: target/website-backend.war
+          path: ~/website-backend/target/website-backend.war
 
   deploy:
     machine:
@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Deploy with SCP
           command: |
-            scp target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
+            scp ~/website-backend/target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
 
 workflows:
   version: 2
