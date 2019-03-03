@@ -21,22 +21,26 @@ jobs:
 
       - run: mvn package
 
+      # need unique id to link this cache to deploy step, such that no rebuild is needed.
+      # it's however not possible to use environment variables in cache-key names, so have to save it to file first
+      - run: echo "$CIRCLE_WORKFLOW_ID" > _env_var_holder
+
       - save_cache:
           paths: # cache artifact so it can be retrieved in deploy step, instead of building again.
             - ~/repo/target/
-          key: backend-artifact-{{ checksum "pom.xml" }}
+          key: backend-artifact-{{ checksum "_env_var_holder" }}
 
   deploy:
-    docker:
-      - image: circleci/openjdk:8-jdk-browsers
+    machine: true
 
     working_directory: ~/repo
 
-    steps: # need to checkout code again for getting pom checksum
-      - checkout
+    steps:
+      - run: echo "$CIRCLE_WORKFLOW_ID" > _env_var_holder
 
       - restore_cache:
-          key: backend-artifact-{{ checksum "pom.xml" }}
+          keys:
+            - backend-artifact-{{ checksum "_env_var_holder" }}
 
       - add_ssh_keys:
           fingerprints:
