@@ -46,7 +46,7 @@ jobs:
           fingerprints:
             - "64:36:b1:01:c9:44:1a:45:68:33:e4:68:7c:39:9f:b6"
 
-      - run: scp -o stricthostkeychecking=no target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
+      - run: scp -rq -o stricthostkeychecking=no target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
 
 workflows:
   version: 2
