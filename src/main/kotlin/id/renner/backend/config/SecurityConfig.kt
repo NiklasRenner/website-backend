@@ -55,11 +55,11 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
-        val corsConfiguration = CorsConfiguration().applyPermitDefaultValues();
+        val corsConfiguration = CorsConfiguration();
         corsConfiguration.allowedOrigins = listOf("http://localhost:4200", "https://renner.id")
 
         val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", corsConfiguration)
+        source.registerCorsConfiguration("/**", corsConfiguration.applyPermitDefaultValues())
         return source
     }
 }
