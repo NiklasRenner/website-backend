@@ -57,6 +57,7 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration();
         corsConfiguration.allowedOrigins = listOf("http://localhost:4200", "https://renner.id")
+        corsConfiguration.exposedHeaders = listOf("Authorization")
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", corsConfiguration.applyPermitDefaultValues())
