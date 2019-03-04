@@ -14,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import javax.servlet.Filter
 
 
@@ -25,7 +28,9 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.httpBasic().disable()
+        http.cors()
+                .and()
+                .httpBasic().disable()
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
@@ -46,6 +51,16 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
     @Throws(Exception::class)
     override fun configure(managerBuilder: AuthenticationManagerBuilder) {
         managerBuilder.userDetailsService(fakeUserDetailsService).passwordEncoder(passwordEncoder())
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val corsConfiguration = CorsConfiguration();
+        corsConfiguration.allowedOrigins = listOf("http://localhost:4200", "https://renner.id")
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", corsConfiguration)
+        return source
     }
 }
 
