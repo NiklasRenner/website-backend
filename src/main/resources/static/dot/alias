@@ -1,1 +1,3 @@
-ll="ls -la --color=auto"
+#!/bin/sh
+
+alias ll="ls -la --color=auto"
