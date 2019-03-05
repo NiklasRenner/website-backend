@@ -1,4 +1,7 @@
 #!/bin/sh
 
 echo "setting aliases"
-alias ll="ls -la --color=auto"
+
+ll () {
+    command ls -la "$@"
+}
