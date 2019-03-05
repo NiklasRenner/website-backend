@@ -39,11 +39,11 @@ class JwtAuthorizationFilter(authenticationManager: AuthenticationManager, algor
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
         val token = request.getHeader(HEADER_STRING) ?: return null
 
-        try {
+        return try {
             val jwt = verifier.verify(token.removePrefix(TOKEN_PREFIX))
-            return UsernamePasswordAuthenticationToken(jwt.subject, null, ArrayList<GrantedAuthority>())
+            UsernamePasswordAuthenticationToken(jwt.subject, null, ArrayList<GrantedAuthority>())
         } catch (ex: JWTVerificationException) {
-            throw RuntimeException(ex)
+            null // if jwt isn't valid exception is thrown and 401 should be returned.
         }
     }
 }
