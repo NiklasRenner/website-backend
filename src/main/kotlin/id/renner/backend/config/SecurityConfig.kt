@@ -1,7 +1,9 @@
 package id.renner.backend.config
 
+import com.auth0.jwt.algorithms.Algorithm
 import id.renner.backend.config.filter.JwtAuthenticationFilter
 import id.renner.backend.config.filter.JwtAuthorizationFilter
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -23,11 +25,16 @@ import javax.servlet.Filter
 @Configuration
 class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
 
+    @Value("\${jwt.secret}")
+    private lateinit var secret: String
+
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
+        val algorithm = Algorithm.HMAC256(secret)
+
         http.cors()
                 .and()
                 .httpBasic().disable()
@@ -42,10 +49,10 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
                 .and()
                 .formLogin().disable()
                 .logout().disable()
-                .addFilterBefore<UsernamePasswordAuthenticationFilter>(JwtAuthenticationFilter(authenticationManager(), "/login"))
-                .addFilterBefore<UsernamePasswordAuthenticationFilter>(JwtAuthorizationFilter(authenticationManager()))
+                .addFilterBefore<UsernamePasswordAuthenticationFilter>(JwtAuthenticationFilter(authenticationManager(), "/login", algorithm))
+                .addFilterBefore<UsernamePasswordAuthenticationFilter>(JwtAuthorizationFilter(authenticationManager(), algorithm))
                 .exceptionHandling()
-                .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
     }
 
     @Throws(Exception::class)
@@ -55,7 +62,7 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
-        val corsConfiguration = CorsConfiguration();
+        val corsConfiguration = CorsConfiguration()
         corsConfiguration.allowedOrigins = listOf("http://localhost:4200", "https://renner.id")
         corsConfiguration.exposedHeaders = listOf("Authorization")
 

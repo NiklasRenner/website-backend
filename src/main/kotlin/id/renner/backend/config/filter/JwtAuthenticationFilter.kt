@@ -23,7 +23,7 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class JwtAuthenticationFilter(val authManager: AuthenticationManager, loginUrl: String) : AbstractAuthenticationProcessingFilter(loginUrl) {
+class JwtAuthenticationFilter(val authManager: AuthenticationManager, loginUrl: String, val algorithm: Algorithm) : AbstractAuthenticationProcessingFilter(loginUrl) {
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
         try {
@@ -37,7 +37,6 @@ class JwtAuthenticationFilter(val authManager: AuthenticationManager, loginUrl: 
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain, authResult: Authentication) {
         try {
-            val algorithm = Algorithm.HMAC256("secret") // TODO replace with env var secret
             val token = JWT.create()
                     .withIssuer(ISSUER)
                     .withSubject((authResult.principal as User).username)

@@ -21,15 +21,10 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
-class JwtAuthorizationFilter(authenticationManager: AuthenticationManager) : BasicAuthenticationFilter(authenticationManager) {
-    private val verifier: JWTVerifier
-
-    init {
-        val algorithm = Algorithm.HMAC256("secret") // TODO replace with env var secret
-        this.verifier = JWT.require(algorithm)
-                .withIssuer(ISSUER)
-                .build()
-    }
+class JwtAuthorizationFilter(authenticationManager: AuthenticationManager, algorithm: Algorithm) : BasicAuthenticationFilter(authenticationManager) {
+    private val verifier: JWTVerifier = JWT.require(algorithm)
+            .withIssuer(ISSUER)
+            .build()
 
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
