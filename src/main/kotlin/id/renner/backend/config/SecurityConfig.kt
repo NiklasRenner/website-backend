@@ -44,7 +44,7 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/services", "/dot/**").permitAll()
+                .antMatchers("/services", "/dot/**", "/p/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable()
