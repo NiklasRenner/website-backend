@@ -2,7 +2,8 @@
 
 PASTE_API_URL=https://dev.renner.id/p/
 
-if [[ $# -eq 0 ]] ; then
+if [ $# -eq 0 ]
+then
     curl -H "Content-Type: text/plain" --data-binary @- ${PASTE_API_URL}
 else
     curl -H "Content-Type: text/plain" --data-binary "@$1" ${PASTE_API_URL}
