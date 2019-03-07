@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import java.util.*
+import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping("/p")
@@ -12,12 +13,19 @@ class PasteController {
     private val map = HashMap<String, String>()
 
     @PostMapping
-    fun paste(@RequestBody data: String): ResponseEntity<String> {
-
+    fun paste(@RequestBody data: String, request: HttpServletRequest): ResponseEntity<String> {
         val id = UUID.randomUUID().toString()
         map[id] = data
 
-        return ResponseEntity.ok("http://localhost:8080/p/$id")
+        val urlBuilder = StringBuilder()
+        urlBuilder.append(request.requestURL.toString())
+        if (urlBuilder.lastIndexOf("/") != urlBuilder.length - 1) {
+            urlBuilder.append("/")
+        }
+        urlBuilder.append(id)
+                .append('\n')
+
+        return ResponseEntity.ok(urlBuilder.toString())
     }
 
     @GetMapping("/{id}", produces = [MediaType.TEXT_PLAIN_VALUE])
