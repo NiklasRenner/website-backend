@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 @RequestMapping("/p")
 class PasteController {
+    //TODO can this be done dynamically?(can't use normal request url because of nginx ssl proxy)
+    private val hostname = "https://dev.renner.id/p/"
     private val map = HashMap<String, String>()
-    private val hostname = "https://dev.renner.id/p/" //TODO can this be done dynamically?(can't use normal request url because of nginx ssl proxy)
 
     @PostMapping
     fun paste(@RequestBody data: String, request: HttpServletRequest): ResponseEntity<String> {
