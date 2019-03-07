@@ -19,7 +19,7 @@ class PasteController {
         val id = UUID.randomUUID().toString()
         map[id] = data
 
-        return ResponseEntity.ok(hostname + id)
+        return ResponseEntity.ok("$hostname$id\n")
     }
 
     @GetMapping("/{id}", produces = [MediaType.TEXT_PLAIN_VALUE])
