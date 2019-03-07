@@ -11,21 +11,14 @@ import javax.servlet.http.HttpServletRequest
 @RequestMapping("/p")
 class PasteController {
     private val map = HashMap<String, String>()
+    private val hostname = "https://dev.renner.id/p/" //TODO can this be done dynamically?(can't use normal request url because of nginx ssl proxy)
 
     @PostMapping
     fun paste(@RequestBody data: String, request: HttpServletRequest): ResponseEntity<String> {
         val id = UUID.randomUUID().toString()
         map[id] = data
 
-        val urlBuilder = StringBuilder()
-        urlBuilder.append(request.requestURL.toString())
-        if (urlBuilder.lastIndexOf("/") != urlBuilder.length - 1) {
-            urlBuilder.append("/")
-        }
-        urlBuilder.append(id)
-                .append('\n')
-
-        return ResponseEntity.ok(urlBuilder.toString())
+        return ResponseEntity.ok(hostname + id)
     }
 
     @GetMapping("/{id}", produces = [MediaType.TEXT_PLAIN_VALUE])
