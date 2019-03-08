@@ -1,11 +1,13 @@
 package id.renner.backend.controller
 
+import id.renner.backend.util.generateId
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.servlet.http.HttpServletRequest
+
 
 @Controller
 @RequestMapping("/p")
@@ -16,7 +18,7 @@ class PasteController {
 
     @PostMapping
     fun paste(@RequestBody data: String, request: HttpServletRequest): ResponseEntity<String> {
-        val id = UUID.randomUUID().toString()
+        val id = generateId(8)
         map[id] = data
 
         return ResponseEntity.ok("$hostname$id\n")
