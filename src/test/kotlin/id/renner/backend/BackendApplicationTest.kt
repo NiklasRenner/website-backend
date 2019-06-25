@@ -1,5 +1,6 @@
 package id.renner.backend
 
+import id.renner.backend.util.decode
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -10,12 +11,10 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.net.Inet4Address
-import java.net.URLDecoder
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
@@ -32,31 +31,31 @@ class BackendApplicationTest {
         val message = "hello world!"
 
         // when
-        val responseBody = mockMvc.perform(post("/p").content(message).characterEncoding(MediaType.TEXT_PLAIN_VALUE))
+        val postResponse = mockMvc.perform(post("/p").content(message).characterEncoding(MediaType.TEXT_PLAIN_VALUE))
                 .andExpect(status().isOk)
                 .andReturn()
                 .response
                 .contentAsString
 
         // then
-        assertThat(responseBody)
+        assertThat(postResponse)
                 .isNotEmpty()
 
         // given
-        val getPath = responseBody
+        val getPath = postResponse
                 .removePrefix(Inet4Address.getLocalHost().hostName)
                 .decode()
                 .trim()
 
         // when
-        val mvcResult: MvcResult = mockMvc.perform(get(getPath))
+        val getResponse = mockMvc.perform(get(getPath))
                 .andExpect(status().isOk)
                 .andReturn()
+                .response
+                .contentAsString
 
         // then
-        assertThat(mvcResult.response.contentAsString)
+        assertThat(getResponse)
                 .isEqualTo(message)
     }
-
-    private fun String.decode() : String = URLDecoder.decode(this, "UTF-8")
 }
