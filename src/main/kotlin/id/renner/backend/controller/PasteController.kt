@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 @RequestMapping("/p")
 class PasteController {
-    //TODO can this be done dynamically?(can't use normal request url because of nginx ssl proxy)
     private val hostname = Inet4Address.getLocalHost().hostName + "/p/"
     private val map = HashMap<String, String>()
 
