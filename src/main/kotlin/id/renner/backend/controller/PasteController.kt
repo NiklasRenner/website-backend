@@ -4,7 +4,12 @@ import id.renner.backend.util.generateId
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import java.net.Inet4Address
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
@@ -13,7 +18,7 @@ import javax.servlet.http.HttpServletRequest
 @RequestMapping("/p")
 class PasteController {
     //TODO can this be done dynamically?(can't use normal request url because of nginx ssl proxy)
-    private val hostname = "https://dev.renner.id/p/"
+    private val hostname = Inet4Address.getLocalHost().hostName + "/p/"
     private val map = HashMap<String, String>()
 
     @PostMapping
