@@ -16,12 +16,8 @@ class TestController {
     )
 
     @GetMapping("/services")
-    fun getServices(): List<ServiceDto> {
-        return services
-    }
+    fun getServices(): List<ServiceDto> = services
 
     @GetMapping("/locked")
-    fun locked(): List<ServiceDto> {
-        return services.take(3)
-    }
+    fun locked(): List<ServiceDto> = services.take(3)
 }

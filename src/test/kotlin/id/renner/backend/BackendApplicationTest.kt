@@ -1,6 +1,7 @@
 package id.renner.backend
 
 import id.renner.backend.util.decode
+import id.renner.backend.util.hostname
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import java.net.Inet4Address
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
@@ -43,7 +43,7 @@ class BackendApplicationTest {
 
         // given
         val getPath = postResponse
-                .removePrefix(Inet4Address.getLocalHost().hostName)
+                .removePrefix(hostname())
                 .decode()
                 .trim()
 

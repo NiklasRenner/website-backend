@@ -1,6 +1,5 @@
 package id.renner.backend.config.filter
 
-
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
@@ -19,7 +18,6 @@ import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-
 
 class JwtAuthorizationFilter(authenticationManager: AuthenticationManager, algorithm: Algorithm) : BasicAuthenticationFilter(authenticationManager) {
     private val verifier: JWTVerifier = JWT.require(algorithm)
