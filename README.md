@@ -6,6 +6,6 @@ Personal project for personal website.
 
 Run `./mvn clean package` to build war file.
 
-##
+## Deploy
 
 Run `./deploy.sh` to deploy locally with docker-compose.
