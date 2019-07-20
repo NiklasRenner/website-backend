@@ -16,4 +16,4 @@ until $(curl --output /dev/null --silent --head --fail http://localhost:1337/ip)
     sleep 5
 done
 
-echo done: $(curl -s https://dev.renner.id/ip)
+printf "\nendpoint was up after $attempt_counter attempts, output: $(curl -s https://dev.renner.id/ip)"

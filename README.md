@@ -4,4 +4,8 @@ Personal project for personal website.
 
 ## Package
 
-Run `./mvn clean package` to build war file for Tomcat deployment.
+Run `./mvn clean package` to build war file.
+
+##
+
+Run `./deploy.sh` to deploy locally with docker-compose.
