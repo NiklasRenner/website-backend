@@ -51,7 +51,7 @@ jobs:
       - run: scp -rq -o stricthostkeychecking=no ./target/website-backend.war $SSH_USER@$SSH_HOST:~/backend/target/website-backend.war
       - run: scp -rq -o stricthostkeychecking=no ./Dockerfile $SSH_USER@$SSH_HOST:~/backend/Dockerfile
       - run: scp -rq -o stricthostkeychecking=no ./docker-compose.yml $SSH_USER@$SSH_HOST:~/backend/docker-compose.yml
-      - run: ssh $SSH_USER@$SSH_HOST "cd ~/backend; docker-compose up --force-recreate --build"
+      - run: ssh $SSH_USER@$SSH_HOST "cd ~/backend && docker-compose up --force-recreate --build"
 
 workflows:
   version: 2

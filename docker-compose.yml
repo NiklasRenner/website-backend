@@ -5,7 +5,7 @@ services:
     container_name: website-backend
     image: website-backend:1.0
     environment:
-      - JWT.SECRET=${JWT.SECRET}
+      JWT.SECRET: ${JWT.SECRET}
     build:
       context: ./
       dockerfile: Dockerfile
