@@ -1,8 +1,11 @@
 package id.renner.backend.controller
 
 import id.renner.backend.model.ServiceDto
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 class TestController {
@@ -20,4 +23,7 @@ class TestController {
 
     @GetMapping("/locked")
     fun locked(): List<ServiceDto> = services.take(3)
+
+    @GetMapping("/ip", produces = [MediaType.TEXT_PLAIN_VALUE])
+    fun get(request: HttpServletRequest) = ResponseEntity.ok(request.remoteAddr)
 }
