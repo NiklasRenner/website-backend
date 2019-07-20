@@ -37,5 +37,5 @@ class TestController {
     }
 
     @GetMapping("/")
-    fun index() = "\u263A"
+    fun index() = "OK"
 }
