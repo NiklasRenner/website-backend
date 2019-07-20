@@ -19,7 +19,7 @@ jobs:
             - ~/.m2
           key: mvn-dependencies-{{ checksum "pom.xml" }}
 
-      - run: mvn package && cp target/website-backend.jar deployment/website-backend.jar
+      - run: mvn package && cp target/website-backend.war deployment/website-backend.war
 
       # need unique id to link this cache to deploy step, such that no rebuild is needed.
       # it's however not possible to use environment variables in cache-key names, so have to save it to file first
