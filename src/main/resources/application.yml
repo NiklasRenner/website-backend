@@ -1,1 +1,1 @@
-jwt.secret: ${jwt.secret}
+jwt.secret: ${GENERATED_KEY}

@@ -30,6 +30,7 @@ jobs:
             - ~/repo/target/website-backend.war
             - ~/repo/Dockerfile
             - ~/repo/docker-compose.yml
+            - ~/repo/run.sh
           key: backend-artifact-{{ checksum "_env_var_holder" }}
 
   deploy:
@@ -51,7 +52,8 @@ jobs:
       - run: scp -rq -o stricthostkeychecking=no ./target/website-backend.war $SSH_USER@$SSH_HOST:~/backend/target/website-backend.war
       - run: scp -rq -o stricthostkeychecking=no ./Dockerfile $SSH_USER@$SSH_HOST:~/backend/Dockerfile
       - run: scp -rq -o stricthostkeychecking=no ./docker-compose.yml $SSH_USER@$SSH_HOST:~/backend/docker-compose.yml
-      - run: ssh $SSH_USER@$SSH_HOST "cd ~/backend && docker-compose up --force-recreate --build"
+      - run: scp -rq -o stricthostkeychecking=no ./run.sh $SSH_USER@$SSH_HOST:~/backend/run.sh
+      - run: ssh $SSH_USER@$SSH_HOST "cd ~/backend && chmod 700 run.sh && ./run.sh"
 
 workflows:
   version: 2

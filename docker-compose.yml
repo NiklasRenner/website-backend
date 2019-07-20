@@ -5,7 +5,7 @@ services:
     container_name: website-backend
     image: website-backend:1.0
     environment:
-      JWT.SECRET: ${JWT.SECRET}
+      GENERATED_KEY: ${GENERATED_KEY}
     build:
       context: ./
       dockerfile: Dockerfile
