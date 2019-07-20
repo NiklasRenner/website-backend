@@ -25,5 +25,13 @@ class TestController {
     fun locked(): List<ServiceDto> = services.take(3)
 
     @GetMapping("/ip", produces = [MediaType.TEXT_PLAIN_VALUE])
-    fun get(request: HttpServletRequest) = ResponseEntity.ok(request.remoteAddr)
+    fun get(request: HttpServletRequest): ResponseEntity<String> {
+        var ip: String? = request.getHeader("X-Forwarded-For")
+
+        if (ip == null) {
+            ip = request.remoteAddr
+        }
+
+        return ResponseEntity.ok(ip ?: "unknown")
+    }
 }
