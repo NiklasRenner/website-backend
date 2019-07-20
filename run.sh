@@ -3,8 +3,17 @@
 export GENERATED_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 docker-compose up -d --force-recreate --build
 
-timeout 30 bash -c 'while [[ "$(curl -s https://dev.renner.id/ip)" != "" ]]; do sleep 5; done' || false
+attempt_counter=0
+max_attempts=5
+until $(curl --output /dev/null --silent --head --fail http://localhost:1337/ip); do
+    if [ ${attempt_counter} -eq ${max_attempts} ];then
+      echo "Max attempts reached"
+      exit 1
+    fi
 
-echo $GENERATED_KEY
-echo done
-curl -s https://dev.renner.id/ip
+    printf '.'
+    attempt_counter=$(($attempt_counter+1))
+    sleep 5
+done
+
+echo done: $(curl -s https://dev.renner.id/ip)
