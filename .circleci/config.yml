@@ -49,7 +49,7 @@ jobs:
           fingerprints:
             - "5b:01:54:2b:8b:cc:57:20:c0:be:2c:24:f6:22:18:81"
 
-      - run: scp -rq -o stricthostkeychecking=no . $SSH_USER@$SSH_HOST:~/backend/
+      - run: scp -rq -o stricthostkeychecking=no ./* $SSH_USER@$SSH_HOST:~/backend/
       - run: ssh $SSH_USER@$SSH_HOST "cd ~/backend && chmod 700 run.sh && ./run.sh"
 
 workflows:
