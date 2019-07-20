@@ -1,4 +1,4 @@
-FROM openjdk:13-jdk
+FROM openjdk:8
 
 VOLUME /tmp
 ADD website-backend.war app.jar

@@ -28,8 +28,8 @@ jobs:
       - save_cache:
           paths: # cache artifact so it can be retrieved in deploy step, instead of building again.
             - ~/repo/target/website-backend.war
-            - ~/Dockerfile
-            - ~/docker-compose.yml
+            - ~/repo/Dockerfile
+            - ~/repo/docker-compose.yml
           key: backend-artifact-{{ checksum "_env_var_holder" }}
 
   deploy:
