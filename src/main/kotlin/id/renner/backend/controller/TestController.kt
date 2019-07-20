@@ -15,7 +15,7 @@ class TestController {
             ServiceDto(3, "some-other-service", "192.168.1.1", "Does stuff(?)."),
             ServiceDto(4, "old-service", "0.0.0.0", "At this point nobody knows what this does."),
             ServiceDto(5, "test-service-2", "127.127.127.127", "Can never have enough tests"),
-            ServiceDto(6, "cdeploy-service", "13.37.13.37", "Wait this is in prod?")
+            ServiceDto(6, "deploy-service", "13.37.13.37", "Wait this is in prod?")
     )
 
     @GetMapping("/services")
