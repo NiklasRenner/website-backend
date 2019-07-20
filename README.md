@@ -1,6 +1,6 @@
-# Kotlin Spring-Boot application for [https://dev.renner.id](https://dev.renner.id)
+# Kotlin Spring-Boot application for [https://dev.renner.id](https://dev.renner.id) [![CircleCI](https://circleci.com/gh/NiklasRenner/website-frontend.svg?style=svg)](https://circleci.com/gh/NiklasRenner/website-frontend)
 
-Personal project for personal website.
+Personal project for personal website. 
 
 ## Package
 
