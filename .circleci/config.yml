@@ -19,7 +19,7 @@ jobs:
             - ~/.m2
           key: mvn-dependencies-{{ checksum "pom.xml" }}
 
-      - run: mvn package
+      - run: mvn package && cp target/website-backend.jar deployment/website-backend.jar
 
       # need unique id to link this cache to deploy step, such that no rebuild is needed.
       # it's however not possible to use environment variables in cache-key names, so have to save it to file first
@@ -27,10 +27,7 @@ jobs:
 
       - save_cache:
           paths: # cache artifact so it can be retrieved in deploy step, instead of building again.
-            - ~/repo/target/website-backend.war
-            - ~/repo/Dockerfile
-            - ~/repo/docker-compose.yml
-            - ~/repo/deploy.sh
+            - ~/repo/deployment
           key: backend-artifact-{{ checksum "_env_var_holder" }}
 
   deploy:
@@ -49,7 +46,7 @@ jobs:
           fingerprints:
             - "5b:01:54:2b:8b:cc:57:20:c0:be:2c:24:f6:22:18:81"
 
-      - run: scp -rq -o stricthostkeychecking=no ./* $SSH_USER@$SSH_HOST:~/backend/
+      - run: scp -rq -o stricthostkeychecking=no ./deployment/* $SSH_USER@$SSH_HOST:~/backend/
       - run: ssh $SSH_USER@$SSH_HOST "cd ~/backend && chmod 700 deploy.sh && ./deploy.sh"
 
 workflows:
