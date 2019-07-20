@@ -35,6 +35,6 @@ class TestController {
         return ResponseEntity.ok(ip ?: "unknown")
     }
 
-    @GetMapping
+    @GetMapping("/")
     fun index() = ResponseEntity.ok("\u263A")
 }
