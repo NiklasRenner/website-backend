@@ -46,7 +46,10 @@ jobs:
           fingerprints:
             - "5b:01:54:2b:8b:cc:57:20:c0:be:2c:24:f6:22:18:81"
 
-      - run: scp -rq -o stricthostkeychecking=no target/website-backend.war $SSH_USER@$SSH_HOST:/var/lib/tomcat8/webapps/website-backend.war
+      - run: scp -rq -o stricthostkeychecking=no target/website-backend.war $SSH_USER@$SSH_HOST:~/backend/target/website-backend.war
+      - run: scp -rq -o stricthostkeychecking=no Dockerfile $SSH_USER@$SSH_HOST:~/backend/Dockerfile
+      - run: scp -rq -o stricthostkeychecking=no docker-compose.yml $SSH_USER@$SSH_HOST:~/backend/docker-compose.yml
+      - run: ssh $SSH_USER@$SSH_HOST docker-compose up
 
 workflows:
   version: 2

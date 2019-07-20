@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app-container:
+    container_name: website-backend
+    image: website-backend:1.0
+    environment:
+      - JWT.SECRET=${JWT.SECRET}
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "1337:1337"
