@@ -6,7 +6,7 @@ docker-compose up -d --force-recreate --build
 attempt_counter=0
 max_attempts=10
 until $(curl --output /dev/null --silent --head --fail http://localhost:1337/ip); do
-    if [ ${attempt_counter} -eq ${max_attempts} ];then
+    if [[ ${attempt_counter} -eq ${max_attempts} ]];then
       echo "Max attempts reached"
       exit 1
     fi
