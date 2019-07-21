@@ -4,6 +4,7 @@ import id.renner.backend.entity.Paste
 import id.renner.backend.repository.PasteRepository
 import id.renner.backend.util.generateId
 import id.renner.backend.util.hostname
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -20,7 +21,12 @@ class PasteController(val repository: PasteRepository) {
     @PostMapping
     fun paste(@RequestBody data: String): ResponseEntity<String> {
         val paste = Paste(generateId(16), data)
-        repository.save(paste)
+
+        try {
+            repository.save(paste)
+        } catch (ex: DataIntegrityViolationException) {
+            return ResponseEntity.badRequest().build()
+        }
 
         return ResponseEntity.ok("${hostname()}/p/${paste.id}\n")
     }
