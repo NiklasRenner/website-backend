@@ -33,6 +33,7 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         val algorithm = Algorithm.HMAC256(secret)
+        val openEndpoints = arrayOf("/", "/services", "/ip", "/dot/**", "/p/**")
 
         http.cors()
                 .and()
@@ -43,7 +44,7 @@ class SecurityConfig(val fakeUserDetailsService: UserDetailsService) : WebSecuri
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/services", "/ip", "/dot/**", "/p/**").permitAll()
+                .antMatchers(*openEndpoints).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable()

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export GENERATED_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+export GENERATED_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
 docker-compose up -d --force-recreate --build
 
 attempt_counter=0
