@@ -1,10 +1,7 @@
 package id.renner.backend.controller
 
 import id.renner.backend.model.ServiceDto
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
@@ -20,21 +17,13 @@ class TestController {
     )
 
     @GetMapping("/services")
-    fun getServices(): List<ServiceDto> = services
+    fun getServices() = services
 
     @GetMapping("/locked")
-    fun locked(): List<ServiceDto> = services.take(3)
+    fun locked() = services.take(3)
 
-    @GetMapping("/ip", produces = [MediaType.TEXT_PLAIN_VALUE])
-    fun ip(request: HttpServletRequest): ResponseEntity<String> {
-        var ip: String? = request.getHeader("X-Forwarded-For")
-
-        if (ip == null) {
-            ip = request.remoteAddr
-        }
-
-        return ResponseEntity.ok(ip ?: "unknown")
-    }
+    @GetMapping("/ip")
+    fun ip(request: HttpServletRequest) = request.getHeader("X-Forwarded-For") ?: request.remoteAddr
 
     @GetMapping("/")
     fun index() = "OK"
