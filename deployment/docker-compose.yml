@@ -11,3 +11,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "1337:1337"
+    deploy:
+      restart_policy:
+        condition: on-failure
