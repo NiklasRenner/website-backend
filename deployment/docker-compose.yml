@@ -13,4 +13,7 @@ services:
       - "1337:1337"
     deploy:
       restart_policy:
-        condition: on-failure
+        condition: any
+        delay: 15s     
+        max_attempts: 10
+        window: 500s
