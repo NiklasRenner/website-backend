@@ -4,6 +4,7 @@ services:
   app-container:
     container_name: website-backend
     image: website-backend:1.0
+    restart: always
     environment:
       GENERATED_KEY: ${GENERATED_KEY}
     build:
@@ -11,9 +12,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "1337:1337"
-    deploy:
-      restart_policy:
-        condition: any
-        delay: 15s     
-        max_attempts: 10
-        window: 500s
