@@ -1,7 +1,6 @@
 package id.renner.backend.util
 
 import java.math.BigInteger
-import java.net.Inet4Address
 import java.net.URLDecoder
 import java.security.SecureRandom
 
@@ -13,6 +12,7 @@ fun generateId(byteLength: Int): String {
     return BigInteger(1, token).toString(16)
 }
 
-fun hostname(): String = Inet4Address.getLocalHost().hostName
+// docker hostname not applicable here
+fun hostname(): String = "https://renner.id"
 
 fun String.decode(): String = URLDecoder.decode(this, "UTF-8")
