@@ -13,6 +13,6 @@ fun generateId(byteLength: Int): String {
 }
 
 // docker hostname not applicable here
-fun hostname(): String = "https://renner.id"
+fun hostname(): String = "https://dev.renner.id"
 
 fun String.decode(): String = URLDecoder.decode(this, "UTF-8")
